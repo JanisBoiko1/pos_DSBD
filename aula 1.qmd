@@ -1,0 +1,67 @@
+---
+title: "aula_1"
+author: "janis"
+format: html
+editor: visual
+---
+
+# Anotações aula 01
+
+## Técnica textual: subtítulo
+
+### Sub-Subtítulo
+
+### Lista Não Numerada
+
+-   1
+-   2
+-   3
+
+1.  1
+
+2.  2
+
+3.  3
+
+4.  4
+
+###Negrito e Itálico
+**Negrito**,*Itálico*,**Negrito**,*Itálico*
+
+```{r}
+x = 5
+
+y = 10
+
+z = x + y
+
+z
+
+x == y
+
+x!= y
+#& and 
+# or
+# Próxima aula estruturas de dados em r
+
+```
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).

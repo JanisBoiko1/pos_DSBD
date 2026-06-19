@@ -1,0 +1,215 @@
+---
+title: "aula_4"
+format: html
+editor: visual
+---
+
+## Manipulação de dados
+
+## **Junção de tabelas**
+
+Existem diferentes tipos de junção de tabela:
+
+-   inner_join(): retorna linas que contém correspondências
+
+-   left_join(): retorna todas as lihas da tabela da esquerda e as linhas correspondentes da tabela da direira
+
+-   right_join(): retorna todas as lihas da tabela da direita e as linhas correspondentes da tabela da esquerda
+
+-   full_join(): retorna todas as linhas de ambas as tabelas
+
+-   semi_join(): retorna todas as linhas da tabela da esquerda que possuem correspondência na tabela da direita
+
+-   anti_join(): retorna todas as linhas da tabela da esquerda que não possuem correspondência na tabela da direita
+
+```{r}
+#install.packages("dplyr")
+library(dplyr)
+
+tabela1 <- data.frame(id = c(1, 2, 3, 4),
+                      nome = c("João", "Maria", "José", "Ana"))
+
+tabela2 <- data.frame(id = c(1, 2, 5, 6),
+                      idade = c(20, 25, 30, 35))
+
+anti_join(tabela1, tabela2, by = "id")
+```
+
+Exercicio
+
+```{r}
+library(tidyverse)
+library(data.table)
+
+nycflights13 <- require(nycflights13)
+flights_12h <- flights %>% filter(arr_delay >= 720 | dep_delay >= 720)
+
+left_join(flights_12h, weather, by = c("year", "month", "day", "hour", "origin")) %>%
+group_by(month) %>% summarise(total_atrasos = n(),
+                                mean_temp = mean(temp, na.rm = T),
+                                mean_wind = mean(wind_speed, na.rm = T),
+                                mean_prec = mean(precip, na.rm = T)) %>% arrange(desc(total_atrasos))
+
+
+
+```
+
+```{r}
+library(tidyverse)
+library(data.table)
+
+nycflights13 <- require(nycflights13)
+destinos <- flights %>% 
+group_by(dest) %>% summarise(total_voos = n()) %>% arrange(desc(total_voos)) %>% head(20) %>% inner_join(airports, by = c("dest" = "faa"))
+
+
+```
+
+```{r}
+library(tidyverse)
+library(data.table)
+
+nycflights13 <- require(nycflights13)
+
+nycflights13::planes
+total_voos <- flights %>% inner_join(planes, by ="tailnum") %>% group_by(tailnum, carrier) %>% summarise(total_voos= n())
+planes %>% mutate(total_voos) #erro, total voos maior que o aceito em mutate
+planes
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+library(tidyverse)
+library(data.table)
+
+nycflights13 <- require(nycflights13)
+
+nycflights13::flights
+flights %>% count(origin,dest) %>% pivot_wider(names_from = origin, 
+              values_from = n, 
+              values_fill = 0)
+```
+
+\*\*Visualização de dados\*\*
+
+geom_point() –\> gráfico de dispersão
+
+```{r}
+library(ggplot2)
+
+## altura e comprimento das pétalas
+iris %>% 
+  ggplot() +
+  aes(x = Petal.Length, 
+      y = Petal.Width,
+      color = Species,
+      size = Sepal.Length) + 
+  geom_point(alpha = 0.7, pch = "circle") +
+  scale_color_manual(values = c("setosa" = "#EE92C2", "versicolor" = "#9D6A89", "virginica" = "#725D68"))
+
+
+```
+
+geom_line() –\> grafico de linha, utilizado para visualizar a relação entre duas variáveis quantitativas
+
+```{r}
+iris %>% 
+  ggplot() +
+  aes(x = Sepal.Length, 
+      y = Sepal.Width, 
+      color = Species, 
+      linetype = Species) + 
+  geom_line() +
+  geom_point()
+```
+
+geom_bar() e geom_col –\> gráfico de barras, utilizado para visualizar relação entre variável quantitativa e categórica
+
+```{r}
+iris %>% 
+  count(Species) %>% 
+  ggplot() +
+  aes(x = Species, 
+      y = n, 
+      color = Species, 
+fill = Species) +
+  geom_bar(stat = "identity")
+```
+
+geom_histogram() –\> utilizado para criar um histograma, visualização da distribuição de uma variável quantitativa. Ex: tamanhos das sépalas
+
+```{r}
+iris %>% 
+  ggplot() +
+  aes(x = Sepal.Length) +
+  geom_histogram(color = "red", 
+                 fill = "salmon", 
+                 bins = 30)
+```
+
+ggrepel: <https://ggrepel.slowkow.com/>
+
+grepel provides geoms for ggplot2 to repel overlapping text labels
+
+geom_density() –\> gráfico de densidade, para visualizar a distribuição de uma variável quantitativa
+
+```{r}
+iris %>% 
+  ggplot() +
+  aes(x = Sepal.Length, 
+      color = Species, 
+      fill = Species) +
+  geom_density(alpha = 0.5)
+```
+
+```{r}
+iris %>% 
+  ggplot() +
+  aes(x = Species, y = Sepal.Length, fill = Species) +
+  geom_violin() + 
+  geom_boxplot(width = 0.1, fill = "white") +
+  labs(title = "Distribuição do comprimento das sépalas por espécie",
+       x = "Espécie",
+       y = "Comprimento das sépalas") +
+  scale_y_continuous(limits = c(4, 8)) +
+  theme(legend.position = "bottom",
+        plot.background = element_rect(fill = "lightblue"), 
+panel.background = element_rect(fill = "lightblue"),
+panel.grid = element_line(color = "blue"),
+        legend.background = element_rect(fill = "lightblue"),
+        legend.title = element_text(color = "blue", 
+                                     size = 15),
+        text = element_text(color = "blue", 
+                            size = 15))
+```
+
+```{r}
+ggplot(datasets::penguins) +
+  aes(
+    x = bill_len,
+    y = flipper_len,
+    colour = sex,
+    size = body_mass
+  ) +
+  geom_point() +
+  scale_color_hue(direction = 1) +
+  theme_minimal()
+
+```
+
+**EXERCICIOS**
+
+1\)
+
+```{r}
+library(ggplot2)
+
+## altura e comprimento das pétalas
+mtcars %>% 
+  ggplot() +
+  aes(x = mpg, 
+      y = wt,
+      color = factor(cyl), 
+      size = hp) 
+```

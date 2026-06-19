@@ -1,0 +1,87 @@
+---
+title: "Meu Primeiro Relatório"
+author: "Janis"
+format: html
+editor: visual
+#bibliography: references.bib
+date: "26-06-08"
+date-format: long
+lang: pt-BR
+theme: 
+  light: yeti
+  dark: slate
+fig-align: center
+fig-width: 10
+fig-height: 12
+html: 
+  code-fold: true
+  code-summary: "Clique aqui para ver o meu código"
+  code-overflow: scroll
+  code-tools: false
+  highlight-style: dracula
+  toc: true
+  toc-depth: 5
+  
+---
+
+## Quarto
+## Bullet Points
+-   Ítem 1;
+
+## Lista Numerada
+1.  Ítem 1;
+
+texto texto texto **negrito** texto texto *itálico*
+> citação
+
+```{r}
+x = 120
+```
+
+## Relatório
+
+O resultado da fatorial de 5 é `r x`\`
+## Configurando Gráficos
+
+```{r}
+# Install ggplot2
+install.packages("ggplot2")
+
+# Load the library
+library(ggplot2)
+
+#| fig-width: 6
+#| fig-height: 4
+#| fig.cap: "Gráfico de exemplo"
+
+ggplot(datasets::iris) +
+  aes(
+    x = Sepal.Length,
+    y = Sepal.Width,
+    fill = Species,
+    colour = Species
+  ) +
+  geom_point(shape = "circle", size = 1.5) +
+  geom_smooth(span = 0.75) +
+  scale_fill_hue(direction = 1) +
+  scale_color_hue(direction = 1) +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  facet_wrap(vars(Species))
+```
+```
+
+Figura
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+
+```
+
+![Urutau](images/clipboard-3893989006.png)

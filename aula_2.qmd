@@ -1,0 +1,331 @@
+---
+title: "aula_2"
+format: html
+editor: visual
+---
+
+## AULA 2
+
+## Estrutura de dados
+
+## Vetores
+
+```{r}
+# c é uma função para criar listas
+numeros <- c(1, 2, 3, 4, 5)
+numeros
+letras <- c("a", "b", "c", "d", "e")
+letras
+logicos <- c(TRUE, FALSE, TRUE, FALSE)
+logicos
+
+# quando misturamos elementos em uma lista turo vira string
+misturados <- c(numeros, logicos, letras)
+misturados
+
+# checar classe
+class(numeros)
+class(logicos)
+
+is.numeric(numeros)
+is.logical(letras)
+
+#verificar se é fator
+fator <- factor(c("Tipo 1", "Tipo 2", "Tipo 3"))
+is.factor(fator)
+is.numeric(fator)
+
+#converter tipo em outro
+as.character(numeros)
+numeros
+
+#converser para datas
+data <- c("2021-01-01", "2021-01-02", "2021-01-03")
+as.Date(data)
+
+# métodos: funções genéricas que atuam conforme a classe
+# para saber quais metodos, usar
+methods(class = "numeric")
+
+## Podemos ter um vetor numérico com nomes =/= de dataframe
+altura <- c("João" = 1.82,
+"Bianca" = 1.68,
+"Eduarda" = 1.62)
+class(altura)
+
+attributes(altura)
+names(altura)
+
+## sequencia numerica
+seq1 <- seq(1,10)
+seq1
+
+seq2 <- seq(10,1, by = -2)
+seq2
+
+rep1 <- rep(c(1, 2, 3), times = 3)
+rep1
+
+rep2 <- rep(c(1, 2, 3), each = 3)
+rep2
+
+## numeros aleatórios
+# 5 números aleatórios entre 0 e 1
+
+runif(5)
+
+# 10 Números aleatórios de uma normal, 
+# com média 0 e desvio padrão 1
+rnorm(10)
+
+#amostras aleatórias
+sample(numeros, size = 3, replace = FALSE)
+
+#Uniforme
+runif(n = 10)
+round(runif(n = 10, min = 10, max = 100))
+
+#Seleção posicional
+altura[1]
+
+#selecione até o terceiro elemento
+altura[1:3]
+
+# Seleciona por nome
+altura["João"]
+
+# seleciona alturas maiores que 1.70
+mascara_logica <- altura > 1.70
+altura[mascara_logica]
+
+# modificar a altura do João
+altura["João"] <- 1.85
+
+#Adiciona a altura de Ivete
+append(altura, value = c("Ivete", 1.60))
+#não guarda se não mandar salvar
+# Concatena alturas
+altura2 <- c("Alana" = 1.70, 
+              "Rafael" = 1.80)
+altura <- c(altura, altura2)
+altura
+
+#remove a altura de Rafael 
+altura = altura[-5]
+
+altura
+
+```
+
+## Operações Estatísticas
+
+```{r}
+#| 
+y <- c(7, 5, 2, 2, 4, 8, 
+       5, 2, 6, 4, 5, 10, 
+       3, 2, 6, 10, 7, 8,
+       6, 10, 3, 4, 5, 1)
+
+# Número de elementos
+length(y)
+
+sum(y)
+
+#media
+mean(y)
+
+#mediana
+median(y)
+
+# máximo
+max(y)
+
+#mínimo
+min(y)
+
+#variância
+var(y)
+
+#desvio padrão
+sd(y)
+
+#desvio absoluto de mediana
+mad(y, constant = 1)
+
+# coeficiente de variação
+100 * sd(y) / mean(y)
+
+#quartis
+quantile(y)
+
+#tabela de frequencia
+table(y)
+```
+
+## Matrizes
+
+```{r}
+#cria uma matriz 2x3
+matriz <- matrix(1:6, nrow = 2)
+matriz2 <- matrix(1:6, ncol = 2)
+
+# Criando matriz a partir de um vetor
+vet1 <- c(1, 2, 3)
+vet2 <- c(4, 5, 6)
+# Junta vet1 e vet2 por linha
+matriz3 <- rbind(vet1, vet2)
+matriz3
+
+matriz4 <- cbind(vet1, vet2)
+matriz4
+
+# Seleciona o elemento da primeira linha
+# e segunda coluna
+matriz[1, 2]
+
+# Seleciona a primeira linha
+matriz[1, ]
+
+# Seleciona a primeira linha
+matriz[1, ]
+
+mat1 <- matrix(1:4, nrow = 2)
+mat1
+mat2 <- matrix(5:8, nrow = 2)
+mat2
+# Soma de matrizes
+mat1 + mat2
+
+#multiplicação de matrizes
+mat1 %*% mat2
+```
+
+## Exercicios
+
+```{r}
+## 1) Crie um vetor com 10 números inteiros aleatórios entre 1 e 100.
+y <- round(runif(n = 10, min = 1, max = 100))
+y
+## 2) Calcule a média, mediana, variância e desvio padrão do vetor criado.
+
+#media
+mean(y)
+
+#mediana
+median(y)
+
+#variância
+var(y)
+
+#desvio padrão
+sd(y)
+
+## 3) Crie uma matriz 3x3 com números inteiros de 1 a 9.
+matriz <- matrix(1:9, nrow = 3)
+matriz
+
+## 4) Selecione o elemento da segunda linha e terceira coluna da matriz criada.
+matriz[2,3]
+
+## 5) Calcule a soma dos elementos da primeira linha da matriz.
+```
+
+## Data Frame
+
+-   Estrutura mais comum em R
+-   semelhante a uma planilha
+-   cada coluna pode ter um tipo diferente
+-   podemos criar a partir de vetores
+
+```{r}
+df <- data.frame(
+  nome = c("João", "Ana", "Carlos"),
+  idade = c(25, 30, 22),
+  altura = c(1.75, 1.60, 1.80)
+)
+names(df)
+df$nome
+dim(df)
+nrow(df)
+ncol(df)
+df$peso <- c(70, 60, 80)
+
+#remover variável
+#df$peso <- NULL
+
+df$imc <- round(df$peso/ (df$altura^2), 2)
+
+#filtrar por subset()
+
+# Filtrar as linhas com idade maior que 25
+#devolve como dataset
+subset(df, idade >25)
+
+#devolve como string
+subset(df, idade > 25, select = nome)
+
+#sumario das informações
+summary(df)
+
+#ordenação
+
+df[order(df$idade), ]
+df[order(df$idade, decreasing = TRUE), ]
+```
+## Data Table
+
+* melhor desempenho do que o datatable
+* eficiencia em leitura, escrita e manipulação de dados
+* instalar pacote install.packages("data.table")
+* carregue o pacote com library(data.table)
+
+``` {r}
+library(data.table)
+# Criar um data.table
+meu_data_table <- data.table(
+  nome = c("Alice", "Bob", "Carol", "Ana", "João", "Carlos", "Patrícia", "Leonardo"),
+  idade = c(25, 30, 28, 20, 27, 50, 60, 45),
+  salario = c(5000, 6000, 5500, 8000, 2000, 3500, 10000, 3800 ), 
+  meio_de_transporte = c('onibus', 'bicicleta', 'onibus', 'carro', 'carro', 'onibus', 'onibus', 'bicicleta'))
+meu_data_table
+
+meu_data_table$nome
+meu_data_table[, . (nome, meio_de_transporte)]
+
+#filtrar
+meu_data_table[idade > 30 & salario > 500, .(nome)]
+
+#agregação de dados
+meu_data_table[, .(media_salario = mean(salario))]
+meu_data_table[, .((media_salario = mean(salario)), by = meio_de_transporte)]
+
+```
+
+## Lendo e Salvando Dados
+## Exercicios
+```{r}
+library(data.table)
+
+#1
+dados <- read.csv("Queimadas.csv")
+dados <- data.table::fread("Queimadas.csv")
+#2
+head(dados)
+#dados[c(1, 2, 3)]
+
+#3
+tail(dados)
+
+#4 
+summary(dados)
+
+#5
+str(dados)
+
+# para arquivos em excel usar readx1::read_excel()
+# para spss haven::read_sav()
+#para sas heaven::read_sas()
+
+```
+
+carreThe `echo: false` option disables the printing of code (only output is displayed).

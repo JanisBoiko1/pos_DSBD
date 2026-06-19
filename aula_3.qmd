@@ -1,0 +1,352 @@
+---
+title: "aula_3"
+format: html
+editor: visual
+---
+
+# Estruturas de Programação
+
+```{r}
+
+#para vetores
+# Notas
+notas <- c("João" = 7.3,
+           "Maria" = 5.1, 
+           "Pedro" = 8.9, 
+           "Ana" = 6.5)
+
+# ifelse
+ifelse(notas >= 7, "Aprovado", 
+              ifelse(notas >= 4, 
+                     "Recuperação", "Reprovado"))
+
+# Utilizando o case_when
+dplyr::case_when(notas >= 7 ~ "Aprovado",
+                 notas >= 4 ~ "Recuperação",
+                 TRUE ~ "Reprovado")
+## 1)
+x = -12
+y = -12
+
+if (x > 0 & y > 0){
+  quadrante = "Quadrante 1"
+  print(quadrante)
+} else if (x < 0 & y > 0 ){
+  quadrante = "Quadrante 2"
+  print(quadrante)
+} else if (x < 0 & y < 0) {
+  quadrante = "Quadrante 3"
+  print(quadrante)
+} else {
+  quadrante = "Quadrante 4"
+  print(quadrante)
+}
+
+## 2)
+x = sample(1:100, 1)
+y = x%%2
+
+if(y == 0){
+  print("Par")
+} else{
+  print("Ímpar")
+}
+
+
+
+```
+
+You can add options to executable code like this
+
+```{r}
+#1)
+n <-10
+
+vetor <- numeric(n)
+vetor[1] <- 0
+vetor[2] <- 1
+for (i in 3:n){
+  vetor[i] = vetor[i-1] + vetor[i-2]
+}
+print(vetor)
+
+#2)
+
+matriz <- matrix(1:9, nrow = 3)
+
+for(i in 1:9){
+  sobra = matriz[i] %% 2
+  if(sobra == 0){
+    print("par")
+  } else {
+    print("impar")
+  }
+  
+}
+
+# while
+i <- 3
+
+fib <- c(1,1)
+
+while (i <= 10) {
+  #usar append
+  i <- i + 1
+
+}
+print(fib)
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+**Funções**
+
+recebe valor de entrada e retorna valor de saída
+
+```{r}
+cv <- function(x) {
+  desvio <- sd(x)
+  media <- mean(x)
+  cv <- round(desvio / media, digits = 2)
+  return(cv)
+}
+
+y <- c(10, 20, 30, 40, 50)
+cv(y)
+```
+
+```{r}
+funcao <- function(x) {
+  y <- x + 1
+  z <- x + 2
+  return(list(y = y, z = z))
+}
+
+funcao(5)
+
+```
+
+```{r}
+funcao_mensagem <- function(x) {
+  print("Início da função")
+  y <- x + 1
+  cat("O valor de y é", y, "\n")
+  message("Mensagem de aviso")
+  warning("Mensagem de alerta")
+  if(x < 0){
+    stop("Erro")
+  }
+}
+funcao_mensagem(-1)
+funcao_mensagem(1)
+```
+
+**Exercícios**
+
+```{r}
+classifica_combustivel <- function(meio_transporte){
+  if(meio_transporte == "carro"){
+    combustivel_tipo <- "Gasolina, Diesel, Eletricidade ou Gás natural"
+    
+  } else if (meio_transporte == "moto") {
+    combustivel_tipo <- "Gasolina"
+  } else if (meio_transporte == "bicicleta"){
+    combustivel_tipo <- "Humana (sem combustível)"
+  } else if (meio_transporte == "onibus"){
+    combustivel_tipo <- "Diesel ou Gás Natural"
+  } else if (meio_transporte == "trem"){
+    combustivel_tipo <- "Eletricidade ou Gás Natural"
+  } else if (meio_transporte == "aviao"){
+    combustivel_tipo = "Querosene"
+  }
+  else {
+    combustivel_tipo <- "Diesel ou Gasolina"
+  }
+  return(combustivel_tipo)
+}
+
+meio <- "barco"
+classifica_combustivel(meio)
+
+```
+
+```{r}
+converte_temperatura <- function(temperatura, unidade_medida){
+  if(unidade_medida == "celsius"){
+    temperatura_convertida <- (temperatura * (1.8)) + 32
+    return(temperatura_convertida)
+  } else if(unidade_medida == "farenheit"){
+    temperatura_convertida <- (temperatura -32) * (5/9)
+    return(temperatura_convertida)
+  } else {
+    warning("Medida incorreta")
+    return(0)
+    
+  }
+}
+
+temperatura = 30
+medida = "celsius"
+converte_temperatura(temperatura, medida)
+```
+
+\*\*
+
+```{r}
+library(tidyverse)
+dados <- readr::read_csv("Mental Health Dataset.csv")
+## Para vermos os dados, podemos utilizar a função head()
+#head(dados, 2)
+
+## Para vermos o resumo dos dados, podemos utilizar a função glimpse()
+#glimpse(dados)
+
+### MUTATE -> CRIA DADOS E LINHAS
+dados <- dados %>% mutate(mercosul = ifelse(Country %in% c("Argentina", "Brazil", "Paraguay", "Uruguay"), "Mercosul", "Não Mercosul"))
+
+#glimpse(dados)
+
+## SELECT SELECIONA DADOS
+dados2 <- dados %>% select(Country, Timestamp, Days_Indoors, mercosul)
+
+#glimpse(dados2)
+
+## PODEMOS USAR O ÍNDICE DAS VARIÁVEIS PARA SELECIONÁ-LAS
+
+dados3 <- dados %>% 
+  select(3:5)
+
+#glimpse(dados3)
+
+## PODEMOS UTILIZAR O OPERADOR : PAR SELECIONAR UM INTERVALO DE VARIÁVEIS
+
+dados4 <- dados %>% 
+  select(treatment:Changes_Habits)
+#glimpse(dados4)
+
+## SELECT + FUNCAO STARTS_WITH(), ENDS_WITH, CONTAINS() E MATCHES()
+dados6 <- dados %>% 
+  select(starts_with("t"))
+#glimpse(dados6)
+
+## SELECT - VARIÁVEL INDESEJADA
+dados10 <- dados %>% 
+  select(-Country, -Timestamp, -Days_Indoors, -mercosul)
+#glimpse(dados10)
+
+## SELECT() POR TPO DE VARIÁVEL
+dados12 <- dados %>% 
+  select_if(is.character)
+#glimpse(dados12)
+
+## FILTRANDO POR OBSERVAÇÕES - FILTER()
+dados13 <- dados %>% filter(mercosul == "Mercosul")
+glimpse(dados13)
+
+```
+
+```{r}
+# Opção 3 - Utilizando o operador %>%
+require(magrittr)
+x <- 1
+x %>% 
+  unique() %>% 
+  cos() %>%
+  sort(decreasing = TRUE)
+
+
+```
+
+Pipe para alterar o vetor inicial -\> útil para bancos de dados muito grandes, que não queremos copiar, só alterar
+
+```{r}
+x <- 1:10
+x %<>% log()
+x
+```
+
+```{r}
+library(tidyverse)
+library(data.table)
+car_crash <- fread("Brazil Total highway crashes 2010 - 2023.csv.gz")
+
+#FILTROS
+#car_crash2 <- car_crash %>% 
+#  filter(tipo_de_ocorrencia %in% c("sem vítima", "Sem Vítimas")
+#glimpse(car_crash2)
+
+## FILTROS UTILIZANDO OPERADORES LÓGICOS & E | 
+#car_crash3 <- car_crash %>% 
+#  filter(tipo_de_ocorrencia == "sem vítima" & automovel >= 3)
+# glimpse(car_crash)
+
+##FILTRANDO COM GREPL (ilesa ou fatal)
+car_crash9 =  car_crash %>% 
+  filter(grepl("ilesa|fatal", tipo_de_ocorrencia))
+
+## FILTRANDO COM %LIKE% (PALAVRA VÍTIMA)
+car_crash8 <- car_crash %>% 
+  filter(tipo_de_ocorrencia %like% "vítima")
+#glimpse(car_crash8)
+
+## ARRANGE() ORDENA O BANCO DE DADOS POR UMA OU MAIS VARIÁVEIS - OU EM ORDENS DESC OU ASC
+car_crash11 = car_crash %>% 
+  arrange(desc(automovel), mortos) %>%
+  select(automovel, mortos)
+# head(car_crash11)
+
+## RENAME() RENOMEA AUTOMÓVEIS
+car_carsh12 = car_crash %>% 
+  rename(numero_automoveis = automovel)
+glimpse(car_carsh12)
+```
+
+**EXERCICIOS**
+
+```{r}
+library(tidyverse)
+library(data.table)
+car_crash <- fread("Brazil Total highway crashes 2010 - 2023.csv.gz")
+
+## SUMMARISE() - SOMA - SUMARIZA O TOTAL DE AUTOMÓVEIS ENVOLVIDOS EM ACIDENTES, POR EZEMPLO
+## CRIA UMA TABELA
+car_crash13 = car_crash %>% 
+  summarise(total_automoveis = sum(automovel, na.rm = TRUE))
+#car_crash13
+
+## GROUP_BY() AGRUPA DADOS
+## IMPORTANTE DESAGRUPAR DEPOIS
+car_crash15 = car_crash %>% 
+  mutate(ano = year(dmy(data))) %>%
+  group_by(ano)
+#glimpse(car_crash15)
+
+## SUMMARISE() + GRPU_BY()
+car_crash16 = car_crash %>% 
+  mutate(ano = year(dmy(data))) %>%
+  group_by(ano) %>%
+  summarise(total_automoveis = sum(automovel, na.rm = TRUE),
+            total_mortos = sum(mortos, na.rm = TRUE))
+#View(car_crash16)
+
+## ENCADEANDO FUNÇÕES
+car_crash17 = car_crash %>% 
+  filter(tipo_de_ocorrencia == "com vítima") %>%
+  summarise(total_automoveis = sum(automovel, na.rm = TRUE),
+            total_mortos = sum(mortos, na.rm = TRUE))
+car_crash17
+```
+
+```{r}
+library(tidyverse)
+library(data.table)
+
+starwars <- as.data.table(starwars)
+#glimpse(star_wars)
+
+starwars2 <- starwars %>% 
+      summarise(n_especies = n_distinct(species))
+#starwars2
+starwars3 < starwars %>% group_by(species) %>% summarise(fres)
+
+```
