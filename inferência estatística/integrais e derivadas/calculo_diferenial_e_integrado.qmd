@@ -1,0 +1,145 @@
+---
+title: "aula_2_estatistica"
+format: html
+editor: visual
+---
+
+## Cálculo Diferencial e Integral para Cienstistas de Dados
+
+## Funções, limites e continuidade
+
+a\) undefined
+
+```{r}
+funcao_a <- function(x) {
+y <- sqrt(x)
+plot(y ~ x, type = "l")
+
+}
+x_vec <- seq(0, 3, by = 0.001)
+funcao_a (x = x_vec)
+
+```
+
+b\) Implemente a função f(x)=log(x) e desenhe seu gráfico no intervalo (−5,5).
+
+```{r}
+funcao_b <- function(x) {
+y <- ifelse(x > 0, log(x), NA)
+return(y)
+}
+
+x_vec <- seq(-5,5, by = 0.01)
+y <- funcao_b (x = x_vec)
+
+plot(y ~ x_vec, type = "l")
+```
+
+c\) Implemente a função log10(x) e desenhe seu gráfico no intervalo (0,5).
+
+```{r}
+funcao_c <- function (x){
+log10(x)
+}
+
+x_vet <- seq(0, 5, by = 0.01)
+y <- funcao_c(x_vet)
+
+plot(y ~ x_vet, type = "l")
+```
+
+d\) Implemente a função exp(x) e desenhe seu gráfico no intervalo (0,1)
+
+```{r}
+funcao_d <- function(x){
+exp(x)
+}
+
+x_vet <- seq(0,1, by = 0.01)
+y <- funcao_d (x_vet)
+
+plot(y ~ x_vet, type = "l")
+```
+
+------------------------------------------------------------------------
+
+\*\* Função Gama
+
+Gama de (n), é (n-1)!
+
+Gama de (n+1) = n.(n-1)!
+
+gama de (n+1) = n.gama(n)
+
+funcao_gama \<- function(n){ gama(n) = (n-1)! }funcao_gama \<- function(n){ gama(n) = (n-1)! }
+
+d\)
+
+```{r}
+funcao_gama <- function(n){
+if(n <= 0) stop("n deve ser positivo")
+f <- function(t) {
+t^(n-1)*exp(-t)
+}
+integrate(f, 0, Inf)$value
+}
+x_vet <- seq(0.5, 3, by = 0.1)
+y <- sapply(x_vet, funcao_gama)
+
+#print(y)
+
+plot(y ~ x_vet, type = "l")
+```
+
+e\) Implemente a função f(x) = 1/x e desenhe seu gráfico no intervalo (-1,1)
+
+```{r}
+funcao_f <- function(x){
+1/x
+}
+
+x_vet <- seq(-1, 1, by= 1)
+y <- funcao_f(x_vet)
+print(y)
+plot(y ~ x_vet, type = "l")
+
+```
+
+h\) implemente a função f(x) = \|x-1\|+2
+
+\| é valor absoluto, distancia entre valor e 0, -5, por exemplo, está a 5 casas do 0, assim como 5 está a 5 casas do 0. -15 está a 15 casas do 0
+
+```{r}
+funcao_g <- function(x){
+  x <- abs(x) + 2
+}
+
+x_vet = seq(-5, 5, by = 1)
+y <- funcao_g(x_vet)
+
+plot(y ~ x_vet, type = "l")
+
+```
+
+h\) implemente a função f(x) = beta(x,0,5) e desenhe o gráfico no intervalo (0,1)
+
+deu trabalho porque se o beta for 0, isso vai pra quase infinito!
+
+```{r}
+funcao_h = function(x){
+  y <- 0.5
+  funcao_beta <- function(x, y){
+    f <- function(t) {
+      t^(x-1) * (1-t)^(y-1)
+    }
+    integrate(f,0.0001,0.9999)$value
+  }
+  funcao_beta(x,y)
+}
+
+x_vet = seq(0,1, by = 0.1)
+y <- sapply(x_vet, funcao_h)
+plot(y ~ x_vet, type = "l")
+```
+
+`ho: false` option disables the printing of code (only output is displayed).

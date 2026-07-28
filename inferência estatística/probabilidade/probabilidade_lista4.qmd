@@ -1,0 +1,578 @@
+---
+title: "probabilidade"
+format: html
+editor: visual
+---
+
+## Variáveis Aleatórias e Distribuições de Probabilidade
+
+Vaeiavel aleatória : descrição numérica de um experimento aleatório Y denota a variável aleatória enquanto y denota os valores realizados de uma variável aleatória.
+
+**Ex:** Lançamento de uma moeda: Y = numero de resultados C(cara)
+
+CC, CK, KK, KC, 3/4 sendo 4 o espaço amostral
+
+### Espaço amostral
+
+A reta real é chamada de Ω = ℜ, ela pode ser estritamente positiva,, positiva com zeros, , de proporções ou índices, isto é, limitada,, de direções, , de contagem,, e de contagem limitada,.
+
+O espaço amostral pode ser de dois típos: discreto, contém apenas um número finito ou contável de elementos, ou contínuo, contém um número infinito e não contável de elementos. As variáveis seguem o mesmo padrão, há variáveis aleatórias discretas no espaço amostral discreto, e variáveis aleatórias contínuas em um espaço amostral contínuo.
+
+## Caracterização probabilística de v.a.'s
+
+A **função** **de probabilidade** fp, da v.a. discreta Y, assume os valores y1, y2,..., yn é a função que atribui probabilidades para cada um dos possíveis valores: {yi, p(yi)}, i=1,2,..., ou seja
+
+$$P(Y=yi) = p(yi)=pi,    i =1,2,...$$
+
+com as seguintes propriedades:
+
+-   A probabilidade de cada valor deve estar entre 0 e 1,
+
+$$ 0<=p(yi)<=1, i=1,2,...$$
+
+-   A soma de todas as probabilidades é igual a 1
+
+    $$
+    \Sigma p(yi) = 1
+    $$
+
+-   A **função densidade de probabilidade** (fdp) atribui probabilidades à intervalos de valores do tipo(a,b) e é definida por:
+
+    $$P(a<Y<b) = \int_{a}^{b} f(y)dy$$
+
+    com as seguintes propriedades:
+
+-   É um função não negativa:
+
+    $f(y) >= 0$
+
+-   A área total sub a curva deve ser igual a 1
+
+$\int_{-\infty}^{+\infty} f(y)dy=1$
+
+-   Qualquer função f(.) que seja não negativa e cuja área total sob a curva seja igual à uma unidade caracterizará uma v.a. contínua
+
+-   **f(y) *não* representa a probabilidade de ocorrência de algum evento, A área sob a curva entre dois pontos fornecerá a probabilidade**
+
+-   Note que:
+
+    -   $P(a<= Y <= b) = P(a<Y <= b) = p(a<=Y<b)=P(a<Y<b)$
+
+    -   $P(Y=y)=0$
+
+    -   
+
+-   **Definição de distribuição acumulada:** A F(y) de uma v.a. continua Y com densidade f(y) é:
+
+$$
+F(y) = P(Y<= y) = \int_{-\infty}^{y} f(d)dt, para +\infty<y<\infty
+$$
+
+De imediato tem-se:
+
+$$
+P(a<Y<b) = F(b)-F(a) e f(y) = dF(y)/dy,
+$$
+
+desde que a derivada exista.
+
+### Exemplo $F(y) = 0.5y^3+0.5$
+
+Função da probabilidade acumulada dde um valor: F(y) = P(Y \<=y)
+
+F(0) -\> probabilidade de Y ser menor ou igual a 0
+
+F(0.5) = probabilidade de Y ser menor ou igual a 0.5
+
+etc
+
+1.  P(Y\>0) pede Y maior que 0, mas a função acumulada diz que Y\<= 0, então $P(Y>0)=1−P(Y≤0)$
+
+    Como $$F(0) = 0.5(0)^3+0,5$$ , então $F(0) = 0.5*0+ 0.5$, que dá 0.5
+
+    Portanto: P(Y\>0) = 1-0.5=0.5
+
+    Ou seja **metade da distribuição está acima de zero**
+
+2.  Já em P(Y\>0.5), temos a mesma lógica, mas queremos o que vem depois de 0.5. Logo:
+
+    $P(Y>0.5) = 1 - P(Y<=0.5)$
+
+    Calculando
+
+    F(0,5) = 0.5(0.5)\^3 + 0.5
+
+    F(0.5) = 0.5(0.125)+0.5
+
+    F(0.5) = 0.5625
+
+    Portanto: P(Y \>0.5) = 1-0.5625 = 0.4375 = 43,75% de chances da áreda de probabilidade ser depois de 0,5
+
+3.  P(-0,5\<=Y\<=0,5). Aqui a probabilidade está entre dois fatores:
+
+    Se $P(a<=Y<=b) = F(b) - F(a)$
+
+    Desse modo: P(-0.5\<=Y\<= 0.5) = F(0.5) - F(-0.5)
+
+    substitui,os o F(0,5) que ja temos por 0.5625
+
+    Fica P(-0.5\<=Y\<= 0.5) = 0.5625 - F(-0.5)
+
+    Agora:
+
+    $F(-0.5) = 0.5(-0.5)^3 + 0.5$
+
+    F(-0.5) = 0.5(-0.125) + 0.5
+
+    F(-0.5) = 0.4375
+
+    Portanto: $P(-0.5<=Y<= 0.5) = 0.5625-0.4375 = 0.125$
+
+    Isto é, a probabilidade de estár entre -0.5 e 0.5 é de 12,5%
+
+4.  P(Y\<1)
+
+    $F(1) = 0.5(1)^3+0.5$
+
+    F(1) = 0.5\*1+0.5
+
+    F(1) = 1
+
+    P(Y\<1) =1
+
+    Ou seja, 100% da distribuição está em 1
+
+5.  P(Y\<0.5)
+
+    Já calculamos, é 0.5625
+
+6.  Por fim $P(Y<0 \cup Y>0.5)$, ou seja, Ymenos que 0 e maior que 0.5
+
+    Como esses intervalos não se sobrepõe, basta comar P(Y\<0) = F(0) e P(Y\>0.5)=1-F(0.5)
+
+    Primeiramente:
+
+    P(Y\<0)=F(0)
+
+    F(0)=0.5\*0+05 = 0.5,
+
+    A seguir:
+
+    P(Y\>0.5)=1-F(0.5), que ja sabemos ser 0.4375
+
+    logo: 0.5+0.4375 = 0.9375
+
+| Tipo de probabilidade       | Como usar a CDF         |
+|-----------------------------|-------------------------|
+| (P(Y\<= a))                 | (F(a))                  |
+| (P(Y\>a))                   | (1-F(a))                |
+| (P(a\<= Y\<= b))            | (F(b)-F(a))             |
+| “ou” (intervalos separados) | soma das probabilidades |
+
+## Variáveis aleatórias bidimensionais
+
+Além de variáveis aleadorias e da distribuição de suas probabilidades, há também interesse no comportamento conjunto de mais de uma variável, explorando suas relações e determinando a associação entre variáveis de interesse.
+
+### Distribuição conjunta e marginal
+
+Sejam X e Y duas v.a.'s discretas originárias do mesmo fenômedo aleatório, com valores atribuídos a partir do mesmo espaço amostral. A **função de probabilidade conjunta** é definida para todos os possíveis pares de valor (X, Y), da seguinte forma:
+
+$$
+p(x,y) = P[(X=x) \cap (Y=y)]= P(X=x, Y=y).
+$$
+
+A função de probabilidade conjunta também pode ser chamada de **distribuição conjunta** ou simplesmente de **conjunta** das v.a.'s.
+
+#### Definição:
+
+A **distribuição marginal** de X e Y são dadas por
+
+$p(x) = \sum_{y} p(x,y)$ e $p(y) = \sum_{x}p(x,y).$
+
+A função f(x,y) é a função desidade conjunta das v.a. contínuas X e Y, se:
+
+1\) f(x,y) \>= 0, para todos os (x,y).
+
+2\) $\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(x,y) = 1$
+
+$P[(X,Y)\in A] = \int\int_A f(x,y)dxdy$ para qualquer região A no plano xy
+
+Distribuição marginal
+
+$f(x) = \int_{-\infty}^{infty} f(x,y)dy$ e\$ f(y) = \int\_{-\infty}\^{infty} f(x,y)dx \$
+
+#### Exemplo:
+
+Uma espresa atua com dois métodos para produzir certo produto. Para um certo dia de operação, sejam X e Y, as proporções de produtos produzidos pelos métodos A e B, respectivamente. Suponha, que a distribuição conjunta de X e Y é dada por:
+
+$f(x,y) = {2/5(2x+3y),0$ , $0<=x<=1,0<=y<=1,$
+
+1\) Verifique se f(x,y) é uma distribuição de probabilidade
+
+2\) Encontre as distribuições marginais de X e Y.
+
+3\) Encontre a probabilidade de $P[(X,Y) \in A]$, onde $A = {x,y)|0<x<0.5, 0.25<y<0.5}$.
+
+1\) condição trivial: x e 1 estão entre 0 e 1 e não mudam de sinal
+
+2\) Verificando se integrais de x e y =1:
+
+```{r}
+install.packages("cubature")
+library(cubature)
+
+f_cubature <- function(v) {
+  x <- v[1] # Primeiro elemento do vetor é o x
+  y <- v[2] # Segundo elemento do vetor é o y
+  return((2/5) * (2*x + 3*y))
+}
+
+resultado <- hcubature(f_cubature, lowerLimit = c(0, 0), upperLimit = c(1, 1))
+
+print(resultado$integral)
+
+```
+
+2\) Obtendo as marginais:
+
+```{r}
+#install.packages("mosaicCalc")
+library(mosaicCalc)
+
+f_integral <- function(x,y){
+  return((4*x/5) + (6*y/5)) 
+}
+
+F_y <- antiD(f_integral(x,y) ~ y)
+fx_analitica <- function (x){F_y(y=1, x=x)-F_y(y=0, x=x)}
+
+F_x <-antiD(f_integral(x, y) ~ x)
+fy_analitica <- function (y){F_x(x=1, y=y)-F_x(x=0, y=y)}
+
+print(fx_analitica(0.5)) 
+print(fy_analitica(0.5))
+
+```
+
+3\) obtendo a probabilidade:
+
+```{r}
+# 1. Definimos a função f e a tornamos vetorizada para ambas as variáveis
+f <- Vectorize(function(x, y) { 
+  (4*x)/5 + (6*y)/5 
+})
+
+# 2. Criamos a função que integra em relação a Y (de 1/4 a 1/2) para cada X
+f_x_integrada <- Vectorize(function(x) {
+  integrate(function(y) f(x, y), lower = 1/4, upper = 1/2)$value
+})
+
+# 3. Fazemos a integral externa em relação a X (de 0 a 1/2)
+resultado_final <- integrate(f_x_integrada, lower = 0, upper = 1/2)
+
+# Exibe o resultado correto: 0.08125
+print(resultado_final$value)
+  
+```
+
+## Distribuição condicional: caso discreto ou contínuo
+
+Sejam X e Y duas v.a. discretas ou contínuas. A **distribuição condicional** de uma v.a. Y dado X = x é:
+
+$f(y|x) = f(x,y)/f(x)$ dado que $f(x)>0$.
+
+$f(x|y) - f(x,y)/f(y)$, dado que $f(y) > 0$
+
+A probabilidade condicional se dá por
+
+$$
+P(a<X<b|Y=y) = \Sigma_{a<x<b} f(x|y)
+$$
+
+$$
+P(a<X<b|Y=y)= \int_{a}^{b} f(x|y)dx
+$$
+
+Sejam X e Y duas v.a. discretas ou contínuoas, com distribuição de probabilidade conjunta $f(x,y)$ e distribuições marginais f(x) e f(y). As v.a.'s X e Y são ditas **estatisticamente independentes** se e somante se
+
+$$
+f(x,y) = f(x)f(y)
+$$
+
+para todo par (x,y) em seus respectivos domínios.
+
+## Modelagem estatística
+
+....
+
+## Distribuição de Bernoulli
+
+A variável aleatória 𝑌 tem distribuição de Bernoulli se apresenta apenas **dois resultados possíveis**, representados por 0 (fracasso ou negativo) e 1 (sucesso ou positivo). **O parâmetro 0 \< 𝑝 \< 1 é a probabilidade de sucesso**. Dessa forma, a função de probabilidade é:
+
+$$
+p(y) = 
+\begin{cases} 
+1 - p & \text{se ``fracasso'' ou } y = 0 \\ 
+p & \text{se ``sucesso'' ou } y = 1, 
+\end{cases}
+= p^y \cdot (1 - p)^{1-y}, \quad y \in \{0, 1\}.
+$$
+
+### Exemplo
+
+Se a face resultante do lançamento de uma moeda é cada: y=1
+
+Se o anúncio para um cliente é convertido em venda: y=1
+
+Se uma semente germina: y=1
+
+Se o jogador pontua no arrepeço à cesta: y=1
+
+Se o paciente é diagnosticado com Covid: y=1
+
+![](images/clipboard-4090716787.png)
+
+## Distribuição Binomial
+
+Tenhamos um experimento aleatório que consiste em n\>0 **tentativas de Bernoulli** , de modo que:
+
+1.  As tentativas sejam **independentes**.
+2.  Cada tentativa aprensete apenas **um de dois** resultados possíveis (0: fracasso ou 1: sucesso).
+3.  A probabilidade de um sucesso em cada tentativa, 0\< p \< 1, é constante.
+
+A variável aleatória Y, que é igual ao número de tentativas que resultam em sucesso, é uma v.a. Binomial com parâmetros p e n. A função de probabilidade de Y é:
+
+$$
+p(y) = \binom{n}{y}. p^y.(1-p)^{n-y}, y \in {0,...,n}
+$$
+
+-   **n**: número total de tentativas.
+
+-   **y**: número de sucessos desejados.
+
+-   **p**: probabilidade de sucesso em uma única tentativa.
+
+-   **1-p**: probabilidade de fracasso (geralmente chamada de q.
+
+-   $\binom{n}{y}$: combinação de n elementos tomados y a y\]
+
+Denotamos por Y\~Bin (n, p).
+
+Dessa forma, Y apresenta $\mu = E(Y) = n.p$ e $\sigma= V(Y) = n.p.(1-p)$
+
+![](images/clipboard-2092605400.png)
+
+```{r}
+
+dbinom(x = 7, size = 10, prob = 0.35)
+
+
+```
+
+## Distribuição de Poisson
+
+Uma variável Y apresenta distribuição de Poisson se as seguintes suposições são atendidas.
+
+1.  Número de eventos em um domínio.
+2.  Taxa de ocorrência constante.
+3.  Independência entre domínios disjuntos.
+4.  Taxa proporcional ao tamanho do domínio
+
+Uma variavel aleatória Y apresenta distribuição de Poisson se as seguintes suposições são atendidas
+
+1.  Consistir no número de eventos que ocorrem em um certo domínio como intervalo de tempo, área, volume, distância ou outra unidade de medida (pessoa, website, bairro)
+2.  A probabilidade de que um evento aconteça é a mesma para qualquer unidade de mesma dimensão -\> taxa de ocorrência **constante**.
+3.  O número de eventos que ocorrem em uma unidade é **independente** do número de eventos que ocorrem em outras unidades mutuamente exclusivas.
+4.  A probabilidade do evento ocorrer em um **subdomínio** é igual para todos os possíveis subdomínios de mesma dimensão e é **proporcional** à dimensão do subdomínio.
+
+### Exemplos:
+
+1.  Número de novos casos de Covid-19 por dia em Curitiba.
+2.  Número de interrupções de operação das máquinas por mês em uma fábrica.
+3.  Número de insetos por armadilha em uma lavoura.
+4.  Número de chutes a gol em uma partida de futebol.
+5.  Número de reclamações de clientes em um dia se serviço no SAC.
+
+A variável aleatória Y tem distribuição de Poisson com parâmetro (taxa) $\lambda>0$ quando sua função de probabilidades é expressa por
+
+$$
+p(y) = exp{-\lambda}.\lambda^y/y!, y\in{0,1,2...}
+$$
+
+Assim, Y tem média e variância dadas por
+
+-   \$\\mi = E(Y) = \lambda\$ é a média de eventos por unidade.
+
+-   \$\\sigma\^2 = V(Y) = \lambda\$.
+
+Ou seja, $\mi = \sigma^2$ e isso é **equidispersão**.
+
+![](images/clipboard-2593773675.png)
+
+```{r}
+
+##Considere uma variável aleatória X que segue distribuição Poisson com lambda = 10. Obtenha P(X = 7).
+#usa,ps d pois pede a probabilidade pontual de um x específico
+dpois(x = 7, lambda = 10)
+```
+
+```{r}
+##Considere uma variável aleatória X que segue distribuição Poisson com lambda = 150. Obtenha P(X > 150).
+#usamos p pois quer a probabilidade cumulativa para um X >150
+ppois(150, lambda = 150, lower.tail = FALSE)
+```
+
+## Distribuição Normal
+
+É a **mais importante** distribuição contínua, dentre outros motivos por que:
+
+1.  Modela adequadamente a distribuição de um grande número de variáveis aleatórias contínuas;
+2.  Serve de aproximação para diversas outras distribuições contínuas e discretas
+3.  Tem papel importante na Teoria Estatística. Fundamenta a obtenção de inferências em diferentes contextos.
+
+Características:
+
+-   Variável aleatória contínua não limitada.
+
+-   Comportamento simétrico.
+
+-   Resultado do efeito de muitos fatores de pequena contribuição.
+
+Justificativa natural para a Normal:
+
+-   Y: resultado do efeito de **muitos fatores** de contribuição **pequena**.
+
+-   Características governadas por muitos **genes**: altura, peso, produtividade, tolerância, etc.
+
+-   Caracteríticas governadas por contições **ambientais**
+
+-   Processos sujeitos a muitos **erros**
+
+A variável aleatória Y tem distribuição Normal com parâmetros $\mu \in R$ e $\sigma ^2>0$ se sua função densidade de rpobabilidade é dada por:
+
+$$
+f(y) = 1/\sqrt{(2\pi \sigma^2)}.exp{- ((y-\mu)^2)/(2\sigma)}, - \infty <y<\infty $$
+
+denotamos por $Y \sim N(\mu,\sigma^2)$
+
+A média e variância de Y são:
+
+$$
+E(Y) = \mu
+$$
+
+$$
+V(Y) = \sigma^2
+$$
+
+portanto, média e variância são diretamente os parâmetros da distribuição.
+
+A distribuição Normal é simétrica. Seguem algumas características sobre isso:
+
+![](images/clipboard-3443004376.png)
+
+-   Média, mediana e moda coincidem.
+
+-   Se 𝑌 ∼ N(𝜇, 𝜎2), então
+
+-   P(𝜇 − 𝜎 \< 𝑌 \< 𝜇 + 𝜎) ≈ 0.6826.
+
+-   P(𝜇 − 2𝜎 \< 𝑌 \< 𝜇 + 2𝜎) ≈ 0.9546.
+
+-   P(𝜇 − 3𝜎 \< 𝑌 \< 𝜇 + 3𝜎) ≈ 0.9973.
+
+-   Pela simetria em relação a 𝜇
+
+-   P(𝑌 \< 𝜇 − 𝛿) = P(𝑌 \> 𝜇 + 𝛿), para qualquer 𝛿.
+
+-   P(𝑌 \> \|𝜇 + 𝛿\|) = P(𝑌 \< 𝜇 − 𝛿) + P(𝑌 \> 𝜇 + 𝛿) = 2 ⋅ P(𝑌 \> 𝜇 + 𝛿)
+
+![](images/clipboard-3561249185.png)
+
+Combinações lineares de variaveis aleatorias com a distruibuição Normal também têm dostroioção Normal.
+
+Considere então K. v.a. de distribuição Normal,
+
+```{python}
+from random import seed, randint, random
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import math
+
+media  = 5.0
+sigma1= 0.2
+sigma2= 0.5
+sigma3= 0.8
+
+#gerar pontos espaçados linearmente
+x = np.linspace(0,10,100)
+
+#calcular cada probabilidade
+#função densidade de probabilidade
+f1 = (1.0/(sigma1 * np.sqrt(2.0 * math.pi))) * np.exp(-0.5 * ((x - media)/sigma1)**2.0)
+f2 = (1.0/(sigma2 * np.sqrt(2.0 * math.pi))) * np.exp(-0.5 * ((x - media)/sigma2)**2.0)
+f3 = (1.0/(sigma3 * np.sqrt(2.0 * math.pi))) * np.exp(-0.5 * ((x - media)/sigma3)**2.0)
+
+#plotagem
+plt.plot(x, f1, label=r'$\sigma$='+str(sigma1))
+plt.plot(x,f2, label=r'$\sigma$='+str(sigma2))
+plt.plot(x, f3, label = r'$\sigma$='+str(sigma3))
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+```
+
+### Exercicios:
+
+2\) Considere uma variável aleatória X que segue distribuição Normal com média 2 e variância 5. Obtenha P( 1 \< X \< 5).
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+from scipy.stats import norm  # para calcular a probabilidade exata
+
+#media 2.0
+media  = 2.0
+#variancia 5.0
+variancia = 5.0
+#sigma pela raiz da variância
+sigma = math.sqrt(variancia)
+
+#limites do intervalo (P(1 < X < 5)) 
+a , b = 1 , 5
+
+#calcular (P(1 < X < 5)) usando a CDF (Função de Distribuição Acumulada)
+probabilidade = norm.cdf(b, media, sigma) - norm.cdf(a, media, sigma)
+
+print(f"Para X ~ N(μ={media}, σ²={variancia}):")
+print(f"P({a} < X < {b}) = {probabilidade:.6f}")
+print(f"ou aproximadamente {probabilidade:.4%}")
+
+
+#gerar pontos espaçados linearmente
+x = np.linspace(media - 4*sigma, media + 4*sigma, 1000)
+f = norm.pdf(x, media, sigma)  # função densidade de probabilidade
+
+# Preencher a área do intervalo
+x_fill = np.linspace(a, b, 100)
+f_fill = norm.pdf(x_fill, media, sigma)
+plt.fill_between(x_fill, 0, f_fill, color='red', alpha=0.3, label=f'P({a}<X<{b}) = {probabilidade:.4f}')
+
+plt.xlabel('x')
+plt.ylabel('Densidade')
+plt.title(f'Distribuição Normal: P({a} < X < {b})')
+plt.axvline(media, color='black', linestyle='--', alpha=0.5, label=f'Média = {media}')
+plt.axvline(a, color='red', linestyle=':', alpha=0.5)
+plt.axvline(b, color='red', linestyle=':', alpha=0.5)
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+6\) Considere uma variável aleatória X que segue distribuição Normal com média 100 e variância 100. Obtenha P(X \< 95). Use duas casas decimais

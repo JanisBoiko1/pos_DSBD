@@ -1,0 +1,5 @@
+Atividade realizada com a colaboração de Lúcio Rosa César e Jorge
+
+Tempo Pi: 4.03370214 s
+3.14159265358986
+

@@ -1,0 +1,17 @@
+PS C:\Users\Janis Boiko\Desktop\Pós ciência de dados\algebra matricial> & "C:\Users\Janis Boiko\AppData\Local\Python\pythoncore-3.14-64\python.exe" "c:/Users/Janis Boiko/Desktop/Pós ciência de dados/algebra matricial/pi_paralelisado.py"
+Tempo Pi: 0.01922560 s
+Tempo Pi: 0.00536728 s
+Tempo Pi: 0.01310468 s
+Tempo Pi: 0.00690579 s
+Start:  0
+End:  24999999
+Start:  25000000
+End:  49999999
+Start:  75000000
+End:  99999999
+Start:  50000000
+End:  74999999
+Valor Pi: 0.8746757515
+Valor Pi: 0.9799146149
+Valor Pi: 0.5675881984
+Valor Pi: 0.7194139736
