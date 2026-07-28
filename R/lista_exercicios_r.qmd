@@ -1,0 +1,250 @@
+---
+title: "exerciciosR"
+format: html
+editor: visual
+---
+
+## Atividade Avaliativa 01
+
+Lista de exercicio de R básico
+
+## Running Code
+
+1\) A respeito de data.frame em `R` é possível afirmar que:
+
+Questão 1 Escolha uma ou mais:
+
+a\. Para acessarmos o elemento da segunda linha e terceira coluna de um data.frame, em R, podemos utilizar `dataframe[2,3]`.
+
+b\. Para acessarmos uma coluna em um data.frame em R, podemos utilizar o nome da coluna, por exemplo, `dataframe$coluna`.
+
+c\. Para somar os elementos de uma coluna numérica em data.frame, em R, podemos utilizar a função `sum()`.
+
+d\. Para obtermos o número de linhas de um data.frame, em R, podemos utilizar `nrow(dataframe)`.
+
+e\. Um data.frame, em R, é uma estrutura de dados que somente armazena elementos de um mesmo tipo.
+
+```{r}
+df <- read.csv("trainTitanic.csv")
+#a) True
+df[2,3]
+#b) True
+df$Survived
+#c) True
+sum(df$Survived)
+#d) True
+nrow(df)
+#e) False
+```
+
+2\) A respeito de vetores em `R` é possível afirmar que:
+
+Questão 2 Escolha uma ou mais:
+
+a\. Para criarmos uma sequência de números repetidos, em R, podemos utilizar a função `rep()`.
+
+b\. Um vetor, em R, pode conter elementos de tipos diferentes.
+
+c\. Em R, um vetor pode ser criado com a função `matrix()`.
+
+d\. Em R, um vetor pode ser criado com a função `vector()`.
+
+e\. Para criarmos uma sequência de números, em R, podemos utilizar a função `seq()`.
+
+```{r}
+#a) True
+rep(3, times = 5)
+#b) False
+v <- c(3,4,5,6,"l", "c")
+v
+#c) False
+minha_matriz <- matrix(c(1, 2, 3, 4), nrow = 1, ncol = 4)
+minha_matriz
+#d) True
+v2 <- vector(mode = "numeric", length = 5)
+is.vector(v2)
+#e) True
+v3 <- seq(from = 1, to = 5, by = 0.05)
+v3
+is.vector(v3)
+
+
+```
+
+3\) A respeito de matrizes em `R` é possível afirmar que:
+
+Questão 3 Escolha uma ou mais:
+
+a\. Para acessarmos a última linha de uma matriz, em R, podemos utilizar `matriz[nrow(matriz),]`.
+
+b\. Para acessarmos o elemento da segunda linha e terceira coluna de uma matriz, em R, podemos utilizar `matriz[2,3]`.
+
+c\. Para acessarmos a última linha e última coluna de uma matriz, em R, podemos utilizar `matriz[nrow(matriz),ncol(matriz)]`.
+
+d\. Em R, uma matriz pode ser criada com a função `matrix()`.
+
+e\. Uma matriz, em R, pode conter elementos de tipos diferentes.
+
+```{r}
+#d) True
+matriz_normal <- matrix(rnorm(9), nrow = 3, ncol = 3)
+matriz_normal
+
+#a) True
+matriz_normal[nrow(matriz_normal),]
+
+#b) True
+matriz_normal[2,3]
+
+#c) True
+matriz_normal[nrow(matriz_normal), ncol(matriz_normal)]
+
+#e) False
+```
+
+4\) A respeito de matrizes em `R` é possível afirmar que:
+
+Questão 4 Escolha uma ou mais:
+
+a\. Para acessarmos a última linha e última coluna de uma matriz, em R, podemos utilizar `matriz[nrow(matriz),ncol(matriz)]`.
+
+b\. Para acessarmos a primeira linha de uma matriz, em R, podemos utilizar `matriz[1,]`.
+
+c\. Para acessarmos os elementos de uma matriz, em R, podemos utilizar colchetes `[]`.
+
+d\. Para acessarmos a última coluna de uma matriz, em R, podemos utilizar `matriz[,ncol(matriz)]`.
+
+e\. Uma matriz, em R, pode conter mais do que duas dimensões.
+
+```{r}
+#a) True
+#b)
+#d) True
+matriz_normal <- matrix(rnorm(9), nrow = 3, ncol = 3)
+matriz_normal
+matriz_normal[1,]
+#c) True
+#d) True
+matriz_normal[,ncol(matriz_normal)]
+#e) False
+```
+
+5\) A respeito de vetores em R é possível afirmar que:
+
+Questão 5 Escolha uma ou mais:
+
+a\. Pra criarmos uma sequência de números, em R, podemos utilizar a função seq().
+
+b\. Um vetor, em R, pode conter elementos de tipos diferentes.
+
+c\. Em R, um vetor pode ser criado com a função matrix().
+
+d\. Em R, um vetor pode ser criado com a função vector().
+
+e\. Em R, um vetor pode ser criado com a função seq().
+
+R = a,d,e
+
+6)A respeito de data.frame em `R` é possível afirmar que:
+
+Questão 6 Escolha uma ou mais:
+
+a\. Para acessarmos uma coluna em um data.frame em R, podemos utilizar o nome da coluna, por exemplo, `dataframe$coluna`.
+
+b\. Em R, um data.frame pode ser criado com a função `matrix()`.
+
+c\. Para acessarmos os elementos de um data.frame, em R, podemos utilizar colchetes `[]`.
+
+d\. Para visualizarmos a estrutura de um data.frame, em R, podemos utilizar a função `str()`.
+
+e\. Para visualizarmos as estatísticas descritivas de um data.frame, em R, podemos utilizar a função `summary()`.
+
+```{r}
+df <- read.csv("trainTitanic.csv")
+#a) True
+df$Name
+#b) True
+#Criando uma matriz
+matriz <- matrix(1:6, nrow = 3, ncol = 2)
+#Convertendo a matriz para dataframe
+df2 <- data.frame(matriz)
+df2
+#c) True
+df[5,5]
+#d) True
+str(df)
+#e) True
+summary(df)
+
+
+
+```
+
+A respeito de vetores em `R` é possível afirmar que:
+
+Questão 7 Escolha uma ou mais:
+
+a\. Para criarmos uma sequência de números, em R, podemos utilizar a função `seq()`.
+
+b\. Em R, um vetor pode ser criado com a função `data.frame()`.
+
+c\. Para somar os elementos de um vetor, em R, podemos utilizar a função `sum()`.
+
+d\. Para criarmos uma sequência de números repetidos, em R, podemos utilizar a função `rep()`.
+
+e\. Em R, um vetor pode ser criado com a função `vector()`.
+
+```{r}
+#a) True
+v3 <- seq(from = 1, to = 5, by = 0.05)
+v3
+is.vector(v3)
+
+#b) False
+#c) True
+sum(v3)
+
+#d) True
+rep(c(1,2,3), times = 3)
+
+# Criando uma lista heterogênea
+minha_lista <- list(
+  nome = "Ana", 
+  idade = 28, 
+  notas = c(9.5, 8.0, 7.5),
+  ativo = TRUE
+)
+minha_lista
+
+```
+
+7\) A respeito de data.frame em `R` é possível afirmar que:
+
+Questão 9 Escolha uma ou mais:
+
+a\. Em R, um data.frame pode ser criado com a função `data.frame()`.
+
+b\. Para visualizarmos as estatísticas descritivas de um data.frame, em R, podemos utilizar a função `summary()`.
+
+c\. Um data.frame, em R, é uma estrutura de dados que somente armazena elementos de um mesmo tipo.
+
+d\. Para acessarmos uma coluna em um data.frame em R, podemos utilizar o nome da coluna, por exemplo, `dataframe$coluna`.
+
+e\. Para somar os elementos de uma coluna numérica em data.frame, em R, podemos utilizar a função `sum()`.
+
+```{r}
+#a) True
+nomes <- c("Ana", "Bruno", "Carla")
+idades <- c(25, 30, 22)
+ativo <- c(TRUE, FALSE, TRUE)
+
+dados<-data.frame(nome = nomes, idade = idades, status = ativo)
+dados
+#b) True
+summary(dados)
+#c) False
+#d) True
+dados$idade
+#e) True
+sum(dados$idade)
+```

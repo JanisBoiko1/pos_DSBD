@@ -1,0 +1,596 @@
+---
+title: "lista_r_2"
+format: html
+editor: visual
+---
+
+## Atividade Avaliativa 02: Funções
+
+Nosso segundo quiz se refere à Funções. São poucas questões sem limite de tentativas e de tempo. 
+
+## Exercicios
+
+1\) Considere uma matriz m x m, em que m é um inteiro positivo. Implemente uma função em R que realize a varredura de uma matriz e execute uma operação específica que depende do valor encontrado na matriz, conforme as seguintes regras:
+
+-   Se o valor for um número primo, multiplique-o por 4.
+
+-   Se o valor for um quadrado perfeito, subtraia
+
+-   Caso o resultado obtido for negativo, eleve a 7 potência.
+
+-   Se o valor for negativo na matriz original, calcule a raiz 3ª de seu módulo.
+
+-   Para todos os outros valores, não faça nada.
+
+A função a ser criada deve retornar a matriz transformada.
+
+Dica: Crie funções auxiliares para verificar se um número é primo e se é um quadrado perfeito, e então implemente a função varrer_matriz que realiza a varredura da matriz conforme as regras estabelecidas.
+
+Considere:
+
+-   Matriz A: matrix( c(-3, -1, 7, -9, 1, 3, -10, 5, -6, 4, -4, -5, -7, 0, 10, -8) , nrow = 4, byrow = FALSE)
+
+-   Matriz B: matrix( c(17, 6, 15, -15, 12, -3, -4, -20, 19, -19, 8, 16, -6, 20, 2, 14, 9, -12, -17, -11) , nrow = 4, byrow = FALSE)
+
+-   Matriz C: matrix( c(9, -9, -30, -2, 15, 5, -4, 13, -22, 16, 24, 19, 18, 17, -1, -6) , nrow = 4, byrow = FALSE)
+
+Considerando o contexto proposto, responda o que se pede.
+
+1.  A soma dos elementos da diagonal principal da matriz A transformada é:
+
+2.  O maior elemento, em módulo, da matriz C transformada é:
+
+3.  A soma dos elementos da coluna 1 da matriz C transformada é:
+
+4.  A matriz A tem quantos números primos?
+
+5.  As matrizes A, B e C juntas têm quantos números primos?
+
+```{r}
+#install.packages("primes")
+library(primes)
+
+is_quadrado_perfeito <- function(num){
+  #é todo número inteiro que pode ser obtido através da multiplicação de um número inteiro por ele mesmo
+  if (num >= 0 && sqrt(num) %% 1 == 0){
+   return(TRUE)
+  }
+  else{
+    return(FALSE)
+  }}
+
+varrer_matriz <-function(matriz){
+for (i in 1:nrow(matriz)) {
+  for (j in 1:ncol(matriz)) {
+    valor_atual <- matriz[i,j]
+    valor_novo <- valor_atual
+    if(is_prime(valor_atual) == TRUE){
+    valor_novo <- valor_atual *4
+    }
+    if(is_quadrado_perfeito(valor_atual) == TRUE){
+      valor_novo <- valor_atual -2
+      if(valor_novo < 0){
+        valor_novo ^ 7
+      }
+    }
+    if(valor_atual < 0){
+    valor_novo <- abs(valor_atual)^(1/3)
+    }
+    matriz[i,j] <- valor_novo
+  }
+}
+  return(matriz)
+}
+
+maior_elemento_modulo <- function (matriz) {
+  maior_modulo <- max(abs(matriz))
+  return(maior_modulo)
+}
+
+matriz_A <- matrix( c(-3, -1, 7, -9, 1, 3, -10, 5, -6, 4, -4, -5, -7, 0, 10, -8) , nrow = 4, byrow = FALSE)
+
+matriz_B <- matrix( c(17, 6, 15, -15, 12, -3, -4, -20, 19, -19, 8, 16, -6, 20, 2, 14, 9, -12, -17, -11) , nrow = 4, byrow = FALSE)
+
+matriz_C <- matrix( c(9, -9, -30, -2, 15, 5, -4, 13, -22, 16, 24, 19, 18, 17, -1, -6) , nrow = 4, byrow = FALSE)
+
+#A soma dos elementos da diagonal principal da matriz A transformada é:
+matriz_A
+nova_matriz <- varrer_matriz(matriz_A)
+nova_matriz
+soma_diagonal_A = sum(diag(nova_matriz))
+soma_diagonal_A
+
+#O maior elemento, em módulo, da matriz C transformada é:
+matriz_C
+nova_C <- varrer_matriz(matriz_C)
+nova_C
+maior_modulo <- maior_elemento_modulo(nova_C)
+maior_modulo
+
+#A soma dos elementos da coluna 1 da matriz C transformada é:
+soma_coluna_1 = sum(nova_C[,1])
+soma_coluna_1
+
+#A matriz A tem quantos números primos?
+total_primos_A <- sum(isprime(matriz_A[matriz_A > 0 & matriz_A == floor(matriz_A) & !is.na(matriz_A)]))
+total_primos_A
+
+#As matrizes A, B e C juntas têm quantos números primos?
+total_primos_B <- sum(isprime(matriz_B[matriz_B > 0 & matriz_B == floor(matriz_B) & !is.na(matriz_B)]))
+total_primos_C <- sum(isprime(matriz_C[matriz_C > 0 & matriz_C == floor(matriz_C) & !is.na(matriz_C)]))
+total_primos = total_primos_A + total_primos_B + total_primos_C
+total_primos
+
+```
+
+2\) A variância amostral $S^2$, o desvio médio absoluto $DMA$e o segundo coeficiente de assimetria de Pearson ($AS_2$ ) são medidas definidas, respectivamente, por
+
+$S^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2, \quad DMA = \frac{1}{n-1} \sum_{i=1}^n |x_i - \bar{x}| \quad \text{e} \quad AS_2 = 3 \cdot \frac{\bar{x} - M_d}{S}$
+
+, em que $\bar{x}$ é a média amostral, $M_d$ é a mediana e $|a|$ corresponde ao módulo de $a$. Implemente uma função em R que retorne uma lista com o $S^2$, o $DMA$ e o $AS_2$ de uma variável quantitativa qualquer. Considere o banco de dados CO2 disponível no R, e responda o que se pede.
+
+-    A $S^2$ da variável \`conc\` é:
+
+-   O $DMA$ da variável \`conc\` é:
+
+-   No nível \`Quebec\` da variável \`Type\`, o $AS_2$ da variável \`uptake\` é:
+
+-   Considerando apenas o nível \`Quebec\` da variável \`Type\`, o $DMA$ da variável \`uptake\` é:
+
+-   Para todas as variáveis do banco \`CO2\` a variância amostral é maior do que o desvio médio absoluto. (TRUE = 1/FALSE = 0)?
+
+```{r}
+library(datasets) 
+
+#função variância amostral
+S2 <- function(x){
+  #comprimento do vetor(coluna)
+  n <- length(x)
+  #média dos valores do vetor
+  x_heat <- mean(x)
+  
+  #variância = sum((valor em particular - média)²) / comprimento - 1
+  sum((x-x_heat)^2)/(n-1) 
+}
+
+#função desvio médio absoluto
+DMA <- function(x){
+  #comprimento vetor
+  n <-length(x)
+  #média vetor
+  x_heat <- mean(x)
+  
+  #desvio médio absoluto
+  #sum(módulo de valor - média) / comprimento - 1
+  sum(abs(x-x_heat))/(n-1)
+}
+
+#função assimetría de pearson
+AS2 <- function(x){
+  #mediana
+  MD <- median(x)
+  #média vetor
+  x_heat <- mean(x)
+  #desvio padrão (raiz da variância)
+  S <- sqrt(S2(x))
+  
+  #3 * média - mediana / desvio padrão
+  3 * ((x_heat-MD) / S)
+}  
+
+df <- data(CO2)
+head(CO2)
+
+# A $S^2$ da variável `conc` é:
+conc <- CO2$conc
+#print(conc)
+s2 <- S2(conc)
+print(s2)
+#verificação
+sqrt(s2)
+
+#O $DMA$ da variável `conc` é:
+DMA(conc)
+
+#No nível `Quebec` da variável `Type`, o $AS_2$ da variável `uptake` é:
+#selecionar quebec
+uptake_Quebec <- c()
+
+for(i in 1:length(CO2$Type)){
+  if(CO2$Type[i] == "Quebec"){
+    uptake_Quebec[i] <-CO2$uptake[i]
+    
+  }
+}
+print(uptake_Quebec)
+
+#chamar função AS_2 e passar uptake_Quebec
+AS2(uptake_Quebec)
+
+#Considerando apenas o nível `Quebec` da variável `Type`, o $DMA$ da variável `uptake` é:
+DMA(uptake_Quebec)
+
+#Para todas as variáveis do banco CO2 a variância amostral é maior do que o desvio médio absoluto. (TRUE = 1/FALSE = 0)?
+S2(CO2$uptake)
+DMA(CO2$uptake)
+
+```
+
+3\)
+
+```{r}
+library(datasets) 
+
+#função variância amostral
+S2 <- function(x){
+  #comprimento do vetor(coluna)
+  n <- length(x)
+  #média dos valores do vetor
+  x_heat <- mean(x)
+  
+  #variância = sum((valor em particular - média)²) / comprimento - 1
+  sum((x-x_heat)^2)/(n-1) 
+}
+
+#função desvio médio absoluto
+DMA <- function(x){
+  #comprimento vetor
+  n <-length(x)
+  #média vetor
+  x_heat <- mean(x)
+  
+  #desvio médio absoluto
+  #sum(módulo de valor - média) / comprimento - 1
+  sum(abs(x-x_heat))/(n-1)
+}
+
+#função assimetría de pearson
+AS2 <- function(x){
+  #mediana
+  MD <- median(x)
+  #média vetor
+  x_heat <- mean(x)
+  #desvio padrão (raiz da variância)
+  S <- sqrt(S2(x))
+  
+  #3 * média - mediana / desvio padrão
+  3 * ((x_heat-MD) / S)
+}  
+
+df <- data(Orange)
+head(Orange)
+
+# A $S^2$ da variável `age` é:
+age <- Orange$age
+s2 <- S2(age)
+
+#verificação
+sqrt(s2)
+
+#O $DMA$ da variável `age` é:
+DMA(age)
+
+#No nível 5 da variável `Tree`, o $AS2$ da variável `circumference` é:
+#selecionar variável tree no nível 5
+level5 <- c()
+
+for(i in 1:length(Orange$Tree)){
+  if(Orange$Tree[i] == 5){
+    value <- Orange$circumference[i]
+    level5 <- c(level5, value)
+  }
+  
+}
+
+#chamar função AS2 e passar circumference 
+AS2(level5)
+
+#Considerando apenas o nível 5 da variável `Tree`, o $DMA$ da variável `circumference` é:
+DMA(level5)
+
+#Para todas as variáveis do banco Orange a variância amostral é maior do que o desvio médio absoluto. (TRUE = 1/FALSE = 0)?
+
+#circumference
+S2(Orange$circumference)
+DMA(Orange$circumference)
+```
+
+4\) Considere uma matriz $m x m$, em que $m$ é um inteiro positivo. Implemente uma função em R que realize a varredura de uma matriz e execute uma operação específica que depende do valor encontrado na matriz, conforme as seguintes regras:
+
+-   Se o valor for um número primo, multiplique-o por 8.
+
+-   Se o valor for um quadrado perfeito, subtraia 17.
+
+-   Caso o resultado obtido for negativo, eleve a 7 potência.
+
+-   Se o valor for negativo na matriz original, calcule a raiz 2 de seu módulo.
+
+-   Para todos os outros valores, não faça nada.
+
+A função a ser criada deve retornar a matriz transformada.
+
+-   Dica: Crie funções auxiliares para verificar se um número é primo e se é um quadrado perfeito, e então implemente a função varrer_matriz que realiza a varredura da matriz conforme as regras estabelecidas.
+
+Considere:
+
+-   Matriz A: matrix( c(-1, -6, 3, -4, -3, -7, 6, 2, 10, -8, 9, 7, -2, -9, -5, -10) , nrow = 4, byrow = FALSE)
+
+-   Matriz B: matrix( c(-17, 1, 7, -18, 13, -11, 14, 15, -20, 0, -15, 18, -5, -7, -9, -12, -13, -2, -4, -3) , nrow = 4, byrow = FALSE)
+
+-   Matriz C: matrix( c(-23, 26, -9, 9, 14, 16, 15, -16, -6, -22, 2, -19, 29, -20, -18, -7) , nrow = 4, byrow = FALSE)
+
+Considerando o contexto proposto, responda o que se pede.
+
+1.  A soma dos elementos da diagonal principal da matriz $A$ transformada é:
+
+2.  O maior elemento, em módulo, da matriz $C$ transformada é:
+
+3.  A soma dos elementos da coluna 4 da matriz $C$ transformada é:
+
+4.  A matriz $A$ tem quantos números primos?
+
+5.  As matrizes $A,B$ e $C$ juntas têm quantos números primos?
+
+```{r}
+#install.packages("primes")
+library(primes)
+
+is_quadrado_perfeito <- function(num){
+  #é todo número inteiro que pode ser obtido através da multiplicação de um número inteiro por ele mesmo
+  if (num >= 0 && sqrt(num) %% 1 == 0){
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+varrer_matriz <-function(matriz){
+for (i in 1:nrow(matriz)) {
+  for (j in 1:ncol(matriz)) {
+    valor_atual <- matriz[i,j]
+    valor_novo <- valor_atual
+    if(is_prime(valor_atual) == TRUE){
+    valor_novo <- valor_atual *8
+    }
+    if(is_quadrado_perfeito(valor_atual) == TRUE){
+      valor_novo <- valor_atual -17
+      if(valor_novo < 0){
+        valor_novo= valor_novo ^ 7
+        }
+    }
+    if(valor_atual < 0){
+      valor_novo <- abs(valor_atual)^(1/2)
+    }
+    matriz[i,j] <- valor_novo
+  }
+  }
+  return(matriz)
+}
+
+maior_elemento_modulo <- function (matriz) {
+  maior_modulo <- max(abs(matriz))
+  return(maior_modulo)
+}
+
+matriz_A <- matrix( c(-1, -6, 3, -4, -3, -7, 6, 2, 10, -8, 9, 7, -2, -9, -5, -10) , nrow = 4, byrow = FALSE)
+
+matriz_B <- matrix( c(-17, 1, 7, -18, 13, -11, 14, 15, -20, 0, -15, 18, -5, -7, -9, -12, -13, -2, -4, -3) , nrow = 4, byrow = FALSE)
+
+matriz_C <- matrix( c(-23, 26, -9, 9, 14, 16, 15, -16, -6, -22, 2, -19, 29, -20, -18, -7) , nrow = 4, byrow = FALSE)
+
+#A soma dos elementos da diagonal principal da matriz transformada é:
+matriz_A
+nova_matriz <- varrer_matriz(matriz_A)
+nova_matriz
+soma_diagonal_A = sum(diag(nova_matriz))
+soma_diagonal_A
+
+#O maior elemento, em módulo, da matriz C transformada é:
+matriz_C
+nova_C <- varrer_matriz(matriz_C)
+nova_C
+maior_modulo <- maior_elemento_modulo(nova_C)
+maior_modulo
+
+#A soma dos elementos da coluna 4 da matriz C transformada é:
+soma_coluna_4 = sum(nova_C[,4])
+soma_coluna_4
+
+#A matriz A tem quantos números primos?
+total_primos_A <- sum(isprime(matriz_A[matriz_A > 0 & matriz_A == floor(matriz_A) & !is.na(matriz_A)]))
+total_primos_A
+
+#As matrizes A, B e C juntas têm quantos números primos?
+total_primos_B <- sum(isprime(matriz_B[matriz_B > 0 & matriz_B == floor(matriz_B) & !is.na(matriz_B)]))
+total_primos_C <- sum(isprime(matriz_C[matriz_C > 0 & matriz_C == floor(matriz_C) & !is.na(matriz_C)]))
+total_primos = total_primos_A + total_primos_B + total_primos_C
+total_primos
+```
+
+```{r}
+library(datasets) 
+
+#função variância amostral
+S2 <- function(x){
+  #comprimento do vetor(coluna)
+  n <- length(x)
+  #média dos valores do vetor
+  x_heat <- mean(x)
+  
+  #variância = sum((valor em particular - média)²) / comprimento - 1
+  sum((x-x_heat)^2)/(n-1) 
+}
+
+#função desvio médio absoluto
+DMA <- function(x){
+  #comprimento vetor
+  n <-length(x)
+  #média vetor
+  x_heat <- mean(x)
+  
+  #desvio médio absoluto
+  #sum(módulo de valor - média) / comprimento - 1
+  sum(abs(x-x_heat))/(n-1)
+}
+
+#função assimetría de pearson
+AS2 <- function(x){
+  #mediana
+  MD <- median(x)
+  #média vetor
+  x_heat <- mean(x)
+  #desvio padrão (raiz da variância)
+  S <- sqrt(S2(x))
+  
+  #3 * média - mediana / desvio padrão
+  3 * ((x_heat-MD) / S)
+}  
+
+df <- data(Orange)
+head(Orange)
+
+# A $S^2$ da variável `age` é:
+age <- Orange$age
+s2 <- S2(age)
+print(s2)
+
+#verificação
+sqrt(s2)
+
+#O $DMA$ da variável `age` é:
+DMA(age)
+
+#No nível 4 da variável `Tree`, o $AS2$ da variável `circumference` é:
+#selecionar variável tree no nível 5
+level4 <- c()
+
+for(i in 1:length(Orange$Tree)){
+  if(Orange$Tree[i] == 4){
+    value <- Orange$circumference[i]
+    level4 <- c(level4, value)
+  }
+  
+}
+
+#chamar função AS2 e passar circumference 
+AS2(level4)
+
+#Considerando apenas o nível 5 da variável `Tree`, o $DMA$ da variável `circumference` é:
+DMA(level4)
+
+#Para todas as variáveis do banco Orange a variância amostral é maior do que o desvio médio absoluto. (TRUE = 1/FALSE = 0)?
+
+#circumference
+S2(Orange$circumference)
+DMA(Orange$circumference)
+```
+
+6\) Considere uma matriz $m$ x $m$ , em que $m$ é um inteiro positivo. Implemente uma função em R que realize a varredura de uma matriz e execute uma operação específica que depende do valor encontrado na matriz, conforme as seguintes regras:
+
+-   Se o valor for um número primo, multiplique-o por 8.
+
+-   Se o valor for um quadrado perfeito, subtraia 11. Caso o resultado obtido for negativo, eleve a 5 potência.
+
+-   Se o valor for negativo na matriz original, calcule a raiz 3 de seu módulo.
+
+-   Para todos os outros valores, não faça nada.
+
+A função a ser criada deve retornar a matriz transformada.
+
+-   Dica: Crie funções auxiliares para verificar se um número é primo e se é um quadrado perfeito, e então implemente a função varrer_matriz que realiza a varredura da matriz conforme as regras estabelecidas.
+
+Considere:
+
+-   Matriz A: matrix( c(8, -1, 3, 2, -2, -9, 4, -7, -3, 0, -10, 10, -4, 9, -6, 5) , nrow = 4, byrow = FALSE)
+
+-   Matriz B: matrix( c(-18, -16, 2, -8, -14, -15, 11, 0, 10, 7, 12, 4, -3, 13, -13, 5, 8, -5, -11, -4) , nrow = 4, byrow = FALSE)
+
+-   Matriz C: matrix( c(15, 14, -10, -19, 21, 27, -17, 10, -23, 30, -5, 29, -4, 23, 1, 25) , nrow = 4, byrow = FALSE)
+
+Considerando o contexto proposto, responda o que se pede.
+
+1.  A soma dos elementos da diagonal principal da matriz A transformada é:
+
+2.  O maior elemento, em módulo, da matriz C transformada é:
+
+3.  A soma dos elementos da coluna 2 da matriz C transformada é:
+
+4.  A matriz A tem quantos números primos?
+
+5.  As matrizes , e juntas têm quantos números primos?
+
+    ```{r}
+    #install.packages("primes")
+    library(primes)
+
+    is_quadrado_perfeito <- function(num){
+      #é todo número inteiro que pode ser obtido através da multiplicação de um número inteiro por ele mesmo
+      if (num >= 0 && sqrt(num) %% 1 == 0){
+        return(TRUE)
+      } else {
+        return(FALSE)
+      }
+    }
+
+    varrer_matriz <-function(matriz){
+    for (i in 1:nrow(matriz)) {
+      for (j in 1:ncol(matriz)) {
+        valor_atual <- matriz[i,j]
+        valor_novo <- valor_atual
+        if(is_prime(valor_atual) == TRUE){
+        valor_novo <- valor_atual *8
+        }
+        if(is_quadrado_perfeito(valor_atual) == TRUE){
+          valor_novo <- valor_atual -11
+          if(valor_novo < 0){
+            valor_novo= valor_novo ^ 5
+            }
+        }
+        if(valor_atual < 0){
+          valor_novo <- abs(valor_atual)^(1/3)
+        }
+        matriz[i,j] <- valor_novo
+      }
+      }
+      return(matriz)
+    }
+
+    maior_elemento_modulo <- function (matriz) {
+      maior_modulo <- max(abs(matriz))
+      return(maior_modulo)
+    }
+
+    matriz_A <- matrix( c(8, -1, 3, 2, -2, -9, 4, -7, -3, 0, -10, 10, -4, 9, -6, 5) , nrow = 4, byrow = FALSE)
+
+    matriz_B <- matrix( c(-18, -16, 2, -8, -14, -15, 11, 0, 10, 7, 12, 4, -3, 13, -13, 5, 8, -5, -11, -4) , nrow = 4, byrow = FALSE)
+
+    matriz_C <- matrix( c(15, 14, -10, -19, 21, 27, -17, 10, -23, 30, -5, 29, -4, 23, 1, 25) , nrow = 4, byrow = FALSE)
+
+    #A soma dos elementos da diagonal principal da matriz transformada é:
+    matriz_A
+    nova_matriz <- varrer_matriz(matriz_A)
+    nova_matriz
+    soma_diagonal_A = sum(diag(nova_matriz))
+    soma_diagonal_A
+
+    #O maior elemento, em módulo, da matriz C transformada é:
+    matriz_C
+    nova_C <- varrer_matriz(matriz_C)
+    nova_C
+    maior_modulo <- maior_elemento_modulo(nova_C)
+    maior_modulo
+
+    #A soma dos elementos da coluna 2 da matriz C transformada é:
+    soma_coluna_2 = sum(nova_C[,2])
+    soma_coluna_2
+
+    #A matriz A tem quantos números primos?
+    total_primos_A <- sum(isprime(matriz_A[matriz_A > 0 & matriz_A == floor(matriz_A) & !is.na(matriz_A)]))
+    total_primos_A
+
+    #As matrizes A, B e C juntas têm quantos números primos?
+    total_primos_B <- sum(isprime(matriz_B[matriz_B > 0 & matriz_B == floor(matriz_B) & !is.na(matriz_B)]))
+    total_primos_C <- sum(isprime(matriz_C[matriz_C > 0 & matriz_C == floor(matriz_C) & !is.na(matriz_C)]))
+    total_primos = total_primos_A + total_primos_B + total_primos_C
+    total_primos
+    ```
